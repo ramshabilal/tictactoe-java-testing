@@ -7,7 +7,7 @@ Group name: Group 8
 Group members:
   1. Zulfkhar Maukeuy (zzm213)
   2. Ramsha Bilal (rb4919)
-  3. ...
+  3. Tuqa Abdelnasir (ua2017)
 
 ## Instructions
 ### Prerequisites
