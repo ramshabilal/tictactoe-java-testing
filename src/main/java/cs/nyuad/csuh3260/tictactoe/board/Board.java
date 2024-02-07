@@ -136,7 +136,7 @@ public class Board {
     }
 
 // check if board is full to determine if game is a tie when updating the scoreboard
-    private isBoardFull() {
+    private boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
             if (board[i][j] == Player.NONE) {
@@ -145,6 +145,10 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public void printScores() {
+        scoreboard.printScores();
     }
 
 }

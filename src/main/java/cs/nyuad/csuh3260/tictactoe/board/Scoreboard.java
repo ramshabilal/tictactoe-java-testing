@@ -11,7 +11,7 @@ public class ScoreBoard {
         int ties = 0; 
     }
 
-    public void update Scores (Board.Player winner) {
+    public void updateScores (Board.Player winner) {
         if (winner == Board.Player.X) {
             xWins++;
         }
