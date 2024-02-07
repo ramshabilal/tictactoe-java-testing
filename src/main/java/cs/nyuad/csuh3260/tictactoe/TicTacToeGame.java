@@ -46,7 +46,7 @@ public class TicTacToeGame {
         }
 
         board.printBoard();
-        board.printScores();
+        board.printScores(); 
         System.out.println("Player " + board.getWinner() + " has won the game!");
         keyboardScanner.close();
     }

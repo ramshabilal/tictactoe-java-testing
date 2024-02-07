@@ -1,5 +1,6 @@
 package cs.nyuad.csuh3260.tictactoe.board;
 
+// ScoreBoard class to keep track of scores
 public class ScoreBoard {
     int xWins;
     int oWins;
@@ -11,6 +12,7 @@ public class ScoreBoard {
         int ties = 0; 
     }
 
+    // update scores when a player wins or game is a tie
     public void updateScores (Board.Player winner) {
         if (winner == Board.Player.X) {
             xWins++;
@@ -23,6 +25,7 @@ public class ScoreBoard {
         }
     }
 
+    // print scores
     public void printScores() {
         System.out.println("X wins: " + xWins);
         System.out.println("O wins: " + oWins);
