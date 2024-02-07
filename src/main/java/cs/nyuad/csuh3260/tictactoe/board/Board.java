@@ -11,6 +11,7 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
+    private scoreboard = {X:0, O:0};
 
     public Board(){
         board = new Player[3][3];
@@ -45,7 +46,9 @@ public class Board {
             board[row][col] = currentPlayer;
 
             if (hasWon(row, col))
-                winner = currentPlayer;
+                { 
+                    winner = currentPlayer;
+                }
             else if(currentPlayer == Player.X)
                 currentPlayer = Player.O;
             else
