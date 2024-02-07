@@ -11,13 +11,14 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
-    private scoreboard = {X:0, O:0};
+    private ScoreBoard scoreboard;
 
     public Board(){
         board = new Player[3][3];
         initBoard();
         winner = null;
         currentPlayer = Player.X;
+        scoreboard = new ScoreBoard();
     }
 
     private void initBoard(){
@@ -45,10 +46,13 @@ public class Board {
         }else{
             board[row][col] = currentPlayer;
 
-            if (hasWon(row, col))
-                { 
-                    winner = currentPlayer;
-                }
+            if (hasWon(row, col)) {
+                winner = currentPlayer;
+                scoreboard.updateScores(winner);
+            }
+            else if (isBoardFull()) {
+                scoreboard.updateScores(null); // Tie
+            }
             else if(currentPlayer == Player.X)
                 currentPlayer = Player.O;
             else
