@@ -135,5 +135,16 @@ public class Board {
         return board[row][col];
     }
 
+// check if board is full to determine if game is a tie when updating the scoreboard
+    private isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+            if (board[i][j] == Player.NONE) {
+                return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }
