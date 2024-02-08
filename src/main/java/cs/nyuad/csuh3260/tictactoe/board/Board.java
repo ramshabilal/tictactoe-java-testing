@@ -11,12 +11,14 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
+    private ScoreBoard scoreboard; // to keep track of scores
 
     public Board(){
         board = new Player[3][3];
         initBoard();
         winner = null;
         currentPlayer = Player.X;
+        scoreboard = new ScoreBoard(); // to keep track of scores
     }
 
     private void initBoard(){
@@ -44,8 +46,13 @@ public class Board {
         }else{
             board[row][col] = currentPlayer;
 
-            if (hasWon(row, col))
+            if (hasWon(row, col)) {
                 winner = currentPlayer;
+                scoreboard.updateScores(winner); // update scores when a player wins
+            }
+            else if (isBoardFull()) {
+                scoreboard.updateScores(null); // update scores when game is a tie - null indicates a tie
+            }
             else if(currentPlayer == Player.X)
                 currentPlayer = Player.O;
             else
@@ -128,5 +135,21 @@ public class Board {
         return board[row][col];
     }
 
+    // check if board is full to determine if game is a tie when updating the scoreboard
+    private boolean isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+            if (board[i][j] == Player.NONE) {
+                return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // print scores
+    public void printScores() {
+        scoreboard.printScores();
+    }
 
 }
