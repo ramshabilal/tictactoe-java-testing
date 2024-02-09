@@ -3,6 +3,7 @@ package cs.nyuad.csuh3260.tictactoe;
 import cs.nyuad.csuh3260.tictactoe.board.Board;
 import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
 import cs.nyuad.csuh3260.tictactoe.board.exceptions.GameFinishedException;
+import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
 
 import java.util.Scanner;
 
@@ -54,6 +55,7 @@ public class TicTacToeGame {
         }
 
         board.printBoard();
+        board.printScores(); 
         System.out.println("Player " + board.getWinner() + " has won the game!");
         keyboardScanner.close();
     }

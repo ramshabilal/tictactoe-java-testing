@@ -15,12 +15,14 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
+    private ScoreBoard scoreboard; // to keep track of scores
 
     public Board() {
         board = new Player[3][3];
         initBoard();
         winner = null;
         currentPlayer = Player.X;
+        scoreboard = new ScoreBoard(); // to keep track of scores
     }
 
     private void initBoard() {
@@ -48,13 +50,17 @@ public class Board {
         } else {
             board[row][col] = currentPlayer;
 
-            if (hasWon(row, col))
+            if (hasWon(row, col)) {
                 winner = currentPlayer;
+                scoreboard.updateScores(winner); // update scores when a player wins
+            }
             else if (isTie()) {
+                scoreboard.updateScores(null); // update scores when game is a tie - null indicates a tie
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("The game is tie :)");
                 throw new GameFinishedException(stringBuilder.toString());
-            } else if (currentPlayer == Player.X)
+            }
+            else if(currentPlayer == Player.X)
                 currentPlayer = Player.O;
             else
                 currentPlayer = Player.X;
@@ -148,6 +154,11 @@ public class Board {
 
     public Player getPlayerAtPos(int row, int col) {
         return board[row][col];
+    }
+
+    // print scores
+    public void printScores() {
+        scoreboard.printScores();
     }
 
 }
