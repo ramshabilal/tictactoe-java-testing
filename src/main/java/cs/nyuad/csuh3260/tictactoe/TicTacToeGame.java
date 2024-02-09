@@ -2,6 +2,7 @@ package cs.nyuad.csuh3260.tictactoe;
 
 import cs.nyuad.csuh3260.tictactoe.board.Board;
 import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
+import cs.nyuad.csuh3260.tictactoe.board.exceptions.GameFinishedException;
 import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
 
 import java.util.Scanner;
@@ -13,26 +14,28 @@ public class TicTacToeGame {
 
     private Board board;
 
-    public TicTacToeGame(){
+    public TicTacToeGame() {
         board = new Board();
     }
 
-    public void promptNextPlayer(){
-        switch(board.getCurrentPlayer()){
+    public void promptNextPlayer() {
+        switch (board.getCurrentPlayer()) {
             case X:
-                System.out.println("It's player " + board.getSymbol(board.getCurrentPlayer()) + "'s turn. Please enter the coordinates of your next move as x,y: ");
+                System.out.println("It's player " + board.getSymbol(board.getCurrentPlayer())
+                        + "'s turn. Please enter the coordinates of your next move as x,y: ");
                 break;
             case O:
-                System.out.println("It's player " + board.getSymbol(board.getCurrentPlayer()) + "'s turn. Please enter the coordinates of your next move as x,y: ");
+                System.out.println("It's player " + board.getSymbol(board.getCurrentPlayer())
+                        + "'s turn. Please enter the coordinates of your next move as x,y: ");
                 break;
 
         }
     }
 
-    public void playGame(){
+    public void playGame() {
         Scanner keyboardScanner = new Scanner(System.in);
 
-        while (board.getWinner() == null){
+        while (board.getWinner() == null) {
             board.printBoard();
             promptNextPlayer();
             String line = keyboardScanner.nextLine();
@@ -42,6 +45,12 @@ public class TicTacToeGame {
             } catch (InvalidMoveException e) {
                 System.out.println("Invalid coordinates. Try again");
                 promptNextPlayer();
+            } catch (GameFinishedException e) {
+                System.out.println("Game finished: " + e.getMessage());
+                return;
+            } catch (Exception e) {
+                System.out.println("Unexpected error: " + e.getMessage());
+                return;
             }
         }
 
@@ -51,7 +60,7 @@ public class TicTacToeGame {
         keyboardScanner.close();
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         TicTacToeGame game = new TicTacToeGame();
         game.playGame();
     }
