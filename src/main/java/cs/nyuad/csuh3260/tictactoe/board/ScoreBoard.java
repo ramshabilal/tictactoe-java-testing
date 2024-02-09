@@ -25,7 +25,7 @@ public class ScoreBoard {
         }
     }
 
-    // print scores
+    // print scores 
     public void printScores() {
         System.out.println("X wins: " + xWins);
         System.out.println("O wins: " + oWins);
