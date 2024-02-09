@@ -33,7 +33,7 @@ public class TicTacToeGame {
     }
 
     public void playGame() {
-      
+
         Scanner keyboardScanner = new Scanner(System.in);
 
         while (board.getWinner() == null) {
@@ -48,7 +48,7 @@ public class TicTacToeGame {
                 promptNextPlayer();
             } catch (GameFinishedException e) {
                 System.out.println("Game finished: " + e.getMessage());
-                return;
+                break;
             } catch (Exception e) {
                 System.out.println("Unexpected error: " + e.getMessage());
                 return;
@@ -56,19 +56,18 @@ public class TicTacToeGame {
         }
 
         board.printBoard();
-        board.printScores(); 
+        board.printScores();
         System.out.println("Player " + board.getWinner() + " has won the game!");
 
-        //Prompt the user whether they want to play another game
+        // Prompt the user whether they want to play another game
         System.out.println("Do you want to play another game? (yes/no)");
         String playAgain = keyboardScanner.nextLine().toLowerCase();
 
         if ("yes".equals(playAgain)) {
-            
+
             board = new Board();
             playGame();
-        } 
-        else {
+        } else {
             // display scoreboard here
             keyboardScanner.close();
         }
