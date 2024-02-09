@@ -56,7 +56,7 @@ public class TicTacToeGame {
         }
 
         board.printBoard();
-        board.printScores();
+        //board.printScores();
         System.out.println("Player " + board.getWinner() + " has won the game!");
 
         // Prompt the user whether they want to play another game
