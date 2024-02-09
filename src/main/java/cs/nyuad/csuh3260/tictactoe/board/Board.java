@@ -22,7 +22,6 @@ public class Board {
         initBoard();
         winner = null;
         currentPlayer = Player.X;
-        scoreboard = new ScoreBoard(); // to keep track of scores
     }
 
     private void initBoard() {
@@ -52,10 +51,8 @@ public class Board {
 
             if (hasWon(row, col)) {
                 winner = currentPlayer;
-                scoreboard.updateScores(winner); // update scores when a player wins
             }
             else if (isTie()) {
-                scoreboard.updateScores(null); // update scores when game is a tie - null indicates a tie
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("The game is tie :)");
                 throw new GameFinishedException(stringBuilder.toString());
@@ -155,10 +152,4 @@ public class Board {
     public Player getPlayerAtPos(int row, int col) {
         return board[row][col];
     }
-
-    // print scores
-    public void printScores() {
-        scoreboard.printScores();
-    }
-
 }

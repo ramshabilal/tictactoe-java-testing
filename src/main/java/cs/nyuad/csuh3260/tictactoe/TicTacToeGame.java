@@ -13,9 +13,11 @@ import java.util.Scanner;
 public class TicTacToeGame {
 
     private Board board;
+    private ScoreBoard scoreboard; // to keep track of scores
 
     public TicTacToeGame() {
         board = new Board();
+        scoreboard = new ScoreBoard(); 
     }
 
     public void promptNextPlayer() {
@@ -56,7 +58,9 @@ public class TicTacToeGame {
         }
 
         board.printBoard();
-        //board.printScores();
+        scoreboard.updateScores(board.getWinner()); // update scores when a player wins
+        scoreboard.printScores(); // print scores after each game
+
         System.out.println("Player " + board.getWinner() + " has won the game!");
 
         // Prompt the user whether they want to play another game
