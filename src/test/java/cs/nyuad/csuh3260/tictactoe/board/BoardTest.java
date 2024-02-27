@@ -2,13 +2,14 @@ package cs.nyuad.csuh3260.tictactoe.board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import cs.nyuad.csuh3260.tictactoe.board.exceptions.GameFinishedException;
 import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
 
 public class BoardTest {
@@ -39,4 +40,94 @@ public class BoardTest {
             }
         }
     }
+
+    @Test
+    public void playingMoveOutOfBoardThrowsInvalidMoveException() throws InvalidMoveException {
+        assertThrows(InvalidMoveException.class, () -> {
+            board.playMove(-1, -1);
+        });
+        assertThrows(InvalidMoveException.class, () -> {
+            board.playMove(4, 4);
+        });
+    }
+
+    @Test
+    public void testPlayMoveOnBoundaries() throws Exception {
+        // Test upper-left corner
+        board.playMove(0, 0);
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 0));
+
+        // Test lower-right corner
+        board.playMove(2, 2);
+        assertEquals(Board.Player.O, board.getPlayerAtPos(2, 2));
+    }
+
+    @Test
+    public void testPlayMoveOnEmptyBoard() throws Exception {
+        // Test playing moves on an empty board
+        // Play moves on different positions
+        board.playMove(0, 0);
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 0));
+
+        board.playMove(1, 1);
+        assertEquals(Board.Player.O, board.getPlayerAtPos(1, 1));
+
+        board.playMove(2, 2);
+        assertEquals(Board.Player.X, board.getPlayerAtPos(2, 2));
+
+        board.playMove(0, 2);
+        assertEquals(Board.Player.O, board.getPlayerAtPos(0, 2));
+
+        board.playMove(1, 0);
+        assertEquals(Board.Player.X, board.getPlayerAtPos(1, 0));
+
+        // Ensure that other positions remain empty
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if ((i == 0 && j == 0) || (i == 1 && j == 1) || (i == 2 && j == 2) || (i == 0 && j == 2)
+                        || (i == 1 && j == 0)) {
+                    continue; // Skip positions where moves were played
+                }
+                assertEquals(Board.Player.NONE, board.getPlayerAtPos(i, j));
+            }
+        }
+    }
+
+    @Test
+    public void testPlayMoveOnOccupiedBoard() throws Exception {
+        // Test playing moves on a board with some squares already occupied by different
+        // players
+
+        // Play initial moves to occupy some squares
+        board.playMove(0, 0); // X
+        board.playMove(1, 1); // O
+        board.playMove(2, 2); // X
+
+        // Play moves on already occupied squares
+        assertThrows(InvalidMoveException.class, () -> board.playMove(0, 0)); // Trying to play on already occupied
+                                                                              // square
+        assertThrows(InvalidMoveException.class, () -> board.playMove(1, 1)); // Trying to play on already occupied
+                                                                              // square
+        assertThrows(InvalidMoveException.class, () -> board.playMove(2, 2)); // Trying to play on already occupied
+                                                                              // square
+    }
+
+    @Test
+    public void testTieAndPlayMoveWhenTied() throws Exception {
+        // Play moves to fill the board without any player winning
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (row == 2 && col == 2) {
+                    assertThrows(GameFinishedException.class, () -> board.playMove(2, 2));
+                } else {
+                    board.playMove(row, col);
+                }
+            }
+        }
+        assertTrue(board.isTie());
+
+        // Attempt to play another move
+        assertThrows(InvalidMoveException.class, () -> board.playMove(0, 0));
+    }
+
 }
