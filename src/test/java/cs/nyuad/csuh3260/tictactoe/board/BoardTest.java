@@ -130,4 +130,43 @@ public class BoardTest {
         assertThrows(InvalidMoveException.class, () -> board.playMove(0, 0));
     }
 
+    @Test
+    public void testWinningHorizontally() throws Exception {
+        // Test winning horizontally
+        board.playMove(0, 0); // X
+        board.playMove(1, 0); // O
+        board.playMove(0, 1); // X
+        board.playMove(1, 1); // O
+        board.playMove(0, 2); // X (should win)
+
+        assertTrue(board.hasWon(0, 2));
+        assertEquals(Board.Player.X, board.getWinner());
+    }
+
+    @Test
+    public void testWinningVertically() throws Exception {
+        // Test winning vertically
+        board.playMove(0, 0); // X
+        board.playMove(0, 1); // O
+        board.playMove(1, 0); // X
+        board.playMove(1, 1); // O
+        board.playMove(2, 0); // X (should win)
+
+        assertTrue(board.hasWon(2, 0));
+        assertEquals(Board.Player.X, board.getWinner());
+    }
+
+    @Test
+    public void testWinningDiagonally() throws Exception {
+        // Test winning diagonally
+        board.playMove(0, 0); // X
+        board.playMove(0, 1); // O
+        board.playMove(1, 1); // X
+        board.playMove(1, 2); // O
+        board.playMove(2, 2); // X (should win)
+
+        assertTrue(board.hasWon(2, 2));
+        assertEquals(Board.Player.X, board.getWinner());
+    }
+
 }
