@@ -1,6 +1,8 @@
 package cs.nyuad.csuh3260.tictactoe.board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -167,6 +169,59 @@ public class BoardTest {
 
         assertTrue(board.hasWon(2, 2));
         assertEquals(Board.Player.X, board.getWinner());
+    }
+
+    @Test
+    public void testGetSymbol() {
+        // Test getSymbol method for player X
+        assertEquals("X", board.getSymbol(Board.Player.X));
+
+        // Test getSymbol method for player O
+        assertEquals("O", board.getSymbol(Board.Player.O));
+
+        // Test getSymbol method for an empty square
+        assertEquals(" ", board.getSymbol(Board.Player.NONE));
+    }
+
+    @Test
+    public void testPlayerAtPosWinnerAndCurrentPlayer() throws Exception {
+        // Test getPlayerAtPos, getWinner, and getCurrentPlayer methods
+
+        // Play moves to set up the board
+        board.playMove(0, 0); // X
+        board.playMove(0, 1); // O
+        board.playMove(0, 2); // X
+        board.playMove(1, 0); // O
+        board.playMove(1, 1); // X
+        board.playMove(2, 0); // O
+        board.playMove(1, 2); // X
+        assertFalse(board.hasWon(2, 0)); // No winner yet
+        board.playMove(2, 1); // O
+        assertFalse(board.hasWon(2, 1)); // No winner yet
+
+        // Verify getPlayerAtPos for various positions
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 0));
+        assertEquals(Board.Player.O, board.getPlayerAtPos(0, 1));
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 2));
+        assertEquals(Board.Player.O, board.getPlayerAtPos(1, 0));
+        assertEquals(Board.Player.X, board.getPlayerAtPos(1, 1));
+        assertEquals(Board.Player.O, board.getPlayerAtPos(2, 0));
+        assertEquals(Board.Player.X, board.getPlayerAtPos(1, 2));
+        assertEquals(Board.Player.O, board.getPlayerAtPos(2, 1));
+        assertEquals(Board.Player.NONE, board.getPlayerAtPos(2, 2));
+
+        // Verify getCurrentPlayer
+        assertEquals(Board.Player.X, board.getCurrentPlayer());
+
+        // Verify getWinner
+        assertNull(board.getWinner());
+
+        // Play the move that will make X win
+        board.playMove(2, 2);
+
+        assertTrue(board.hasWon(2, 2)); // X has won
+        assertEquals(Board.Player.X, board.getWinner());
+        assertEquals(Board.Player.X, board.getCurrentPlayer()); // Game has finished
     }
 
 }
