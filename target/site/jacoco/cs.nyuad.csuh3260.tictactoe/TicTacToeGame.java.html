@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicTacToeGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToe</a> &gt; <a href="index.source.html" class="el_package">cs.nyuad.csuh3260.tictactoe</a> &gt; <span class="el_source">TicTacToeGame.java</span></div><h1>TicTacToeGame.java</h1><pre class="source lang-java linenums">package cs.nyuad.csuh3260.tictactoe;
+
+import cs.nyuad.csuh3260.tictactoe.board.Board;
+import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
+import cs.nyuad.csuh3260.tictactoe.board.exceptions.GameFinishedException;
+import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
+
+import java.util.Scanner;
+
+/**
+ * Created by snadi on 2018-07-18.
+ */
+public class TicTacToeGame {
+
+    private Board board;
+    private ScoreBoard scoreboard; // to keep track of scores
+
+<span class="nc" id="L18">    public TicTacToeGame() {</span>
+<span class="nc" id="L19">        board = new Board();</span>
+<span class="nc" id="L20">        scoreboard = new ScoreBoard(); </span>
+<span class="nc" id="L21">    }</span>
+
+    public void promptNextPlayer() {
+<span class="nc bnc" id="L24" title="All 3 branches missed.">        switch (board.getCurrentPlayer()) {</span>
+            case X:
+<span class="nc" id="L26">                System.out.println(&quot;It's player &quot; + board.getSymbol(board.getCurrentPlayer())</span>
+                        + &quot;'s turn. Please enter the coordinates of your next move as x,y: &quot;);
+<span class="nc" id="L28">                break;</span>
+            case O:
+<span class="nc" id="L30">                System.out.println(&quot;It's player &quot; + board.getSymbol(board.getCurrentPlayer())</span>
+                        + &quot;'s turn. Please enter the coordinates of your next move as x,y: &quot;);
+                break;
+
+        }
+<span class="nc" id="L35">    }</span>
+
+    public void playGame() {
+
+<span class="nc" id="L39">        Scanner keyboardScanner = new Scanner(System.in);</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        while (board.getWinner() == null) {</span>
+<span class="nc" id="L42">            board.printBoard();</span>
+<span class="nc" id="L43">            promptNextPlayer();</span>
+<span class="nc" id="L44">            String line = keyboardScanner.nextLine();</span>
+<span class="nc" id="L45">            String input[] = line.split(&quot;,&quot;);</span>
+            try {
+<span class="nc" id="L47">                board.playMove(Integer.parseInt(input[0]), Integer.parseInt(input[1]));</span>
+<span class="nc" id="L48">            } catch (InvalidMoveException e) {</span>
+<span class="nc" id="L49">                System.out.println(&quot;Invalid coordinates. Try again&quot;);</span>
+<span class="nc" id="L50">                promptNextPlayer();</span>
+<span class="nc" id="L51">            } catch (GameFinishedException e) {</span>
+<span class="nc" id="L52">                System.out.println(&quot;Game finished: &quot; + e.getMessage());</span>
+<span class="nc" id="L53">                break;</span>
+<span class="nc" id="L54">            } catch (Exception e) {</span>
+<span class="nc" id="L55">                System.out.println(&quot;Unexpected error: &quot; + e.getMessage());</span>
+<span class="nc" id="L56">                return;</span>
+<span class="nc" id="L57">            }</span>
+<span class="nc" id="L58">        }</span>
+
+<span class="nc" id="L60">        board.printBoard();</span>
+<span class="nc" id="L61">        scoreboard.updateScores(board.getWinner()); // update scores when a player wins</span>
+<span class="nc" id="L62">        scoreboard.printScores(); // print scores after each game</span>
+
+<span class="nc" id="L64">        System.out.println(&quot;Player &quot; + board.getWinner() + &quot; has won the game!&quot;);</span>
+
+        // Prompt the user whether they want to play another game
+<span class="nc" id="L67">        System.out.println(&quot;Do you want to play another game? (yes/no)&quot;);</span>
+<span class="nc" id="L68">        String playAgain = keyboardScanner.nextLine().toLowerCase();</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (&quot;yes&quot;.equals(playAgain)) {</span>
+
+<span class="nc" id="L72">            board = new Board();</span>
+<span class="nc" id="L73">            playGame();</span>
+        } else {
+            // display scoreboard here
+<span class="nc" id="L76">            keyboardScanner.close();</span>
+        }
+<span class="nc" id="L78">        keyboardScanner.close();</span>
+<span class="nc" id="L79">    }</span>
+
+    public static void main(String args[]) {
+<span class="nc" id="L82">        TicTacToeGame game = new TicTacToeGame();</span>
+<span class="nc" id="L83">        game.playGame();</span>
+<span class="nc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
