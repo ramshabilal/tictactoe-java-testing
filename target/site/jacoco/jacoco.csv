@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 TicTacToe,cs.nyuad.csuh3260.tictactoe.board,Board.Player,0,21,0,0,0,2,0,1,0,1
-TicTacToe,cs.nyuad.csuh3260.tictactoe.board,ScoreBoard,16,38,1,5,4,12,2,4,1,2
+TicTacToe,cs.nyuad.csuh3260.tictactoe.board,ScoreBoard,0,54,0,6,0,16,0,6,0,3
 TicTacToe,cs.nyuad.csuh3260.tictactoe.board,Board,448,0,88,0,69,0,58,0,13,0
 TicTacToe,cs.nyuad.csuh3260.tictactoe.board.exceptions,GameFinishedException,4,0,0,0,2,0,1,0,1,0
 TicTacToe,cs.nyuad.csuh3260.tictactoe.board.exceptions,InvalidMoveException,4,0,0,0,2,0,1,0,1,0
