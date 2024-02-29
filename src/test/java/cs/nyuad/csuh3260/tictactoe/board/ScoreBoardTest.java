@@ -1,4 +1,5 @@
 package cs.nyuad.csuh3260.tictactoe.board;
+import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,8 +14,6 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
 
 public class ScoreBoardTest {
 
@@ -38,7 +37,6 @@ public class ScoreBoardTest {
         assertEquals(0, scoreboard.oWins);
         assertEquals(0, scoreboard.ties);
     }
-
 
         // Test updating scores when X wins
     @Test
@@ -130,5 +128,5 @@ public class ScoreBoardTest {
         assertEquals(0, scoreboard.xWins);
         assertEquals(0, scoreboard.oWins);
         assertEquals(0, scoreboard.ties);
-    }
+    }   
 }
