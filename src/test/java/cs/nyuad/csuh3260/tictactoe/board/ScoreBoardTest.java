@@ -41,18 +41,36 @@ public class ScoreBoardTest {
     // Test updating scores when O wins
     @Test
     public void testUpdateScores_OWins() {
-        scoreboard.updateScores(Board.Player.O);
-        assertEquals(0, scoreboard.xWins);
-        assertEquals(1, scoreboard.oWins);
-        assertEquals(0, scoreboard.ties);
+        scoreboard.updateScores(Board.Player.O); // O wins
+        assertEquals(0, scoreboard.xWins);       // X wins remain 0
+        assertEquals(1, scoreboard.oWins);       // O wins incremented
+        assertEquals(0, scoreboard.ties);        // Ties remain 0
     }
 
     // Test updating scores when the game is a tie
     @Test
     public void testUpdateScores_Tie() {
-        scoreboard.updateScores(null);
-        assertEquals(0, scoreboard.xWins);
-        assertEquals(0, scoreboard.oWins);
-        assertEquals(1, scoreboard.ties);
+        scoreboard.updateScores(null);      // Tie
+        assertEquals(0, scoreboard.xWins);  // X wins remain 0
+        assertEquals(0, scoreboard.oWins);  // O wins remain 0
+        assertEquals(1, scoreboard.ties);   // Ties incremented
+    }
+
+    // Test updating scores after multiple games
+    @Test
+    public void testUpdateScores_MultipleGames() {
+        // Simulate multiple games with alternating winners and ties
+        scoreboard.updateScores(Board.Player.X); // X wins
+        scoreboard.updateScores(null); // Tie
+        scoreboard.updateScores(Board.Player.O); // O wins
+        scoreboard.updateScores(Board.Player.O); // O wins again
+        scoreboard.updateScores(null); // Tie
+        scoreboard.updateScores(null); // Tie
+        scoreboard.updateScores(Board.Player.X); // X wins again
+        
+        // Verify that the scoreboard has been updated correctly after multiple games
+        assertEquals(2, scoreboard.xWins); // Check if X wins count is 2
+        assertEquals(2, scoreboard.oWins); // Check if O wins count is 2
+        assertEquals(3, scoreboard.ties); // Check if ties count is 3
     }
 }

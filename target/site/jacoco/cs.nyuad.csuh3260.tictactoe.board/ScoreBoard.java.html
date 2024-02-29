@@ -14,16 +14,16 @@ public class ScoreBoard {
 
     // update scores when a player wins or game is a tie
     public void updateScores (Board.Player winner) {
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (winner == Board.Player.X) {</span>
-<span class="nc" id="L18">            xWins++;</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (winner == Board.Player.X) {</span>
+<span class="fc" id="L18">            xWins++;</span>
         }
-<span class="nc bnc" id="L20" title="All 2 branches missed.">        else if (winner == Board.Player.O) {</span>
-<span class="nc" id="L21">            oWins++;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        else if (winner == Board.Player.O) {</span>
+<span class="fc" id="L21">            oWins++;</span>
         }
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        else if (winner == null){</span>
-<span class="nc" id="L24">            ties++;</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        else if (winner == null){</span>
+<span class="fc" id="L24">            ties++;</span>
         }
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L26">    }</span>
 
     // print scores 
     public void printScores() {
