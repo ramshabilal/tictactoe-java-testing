@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,10 +47,16 @@ public class BoardTest {
     @Test
     public void playingMoveOutOfBoardThrowsInvalidMoveException() throws InvalidMoveException {
         assertThrows(InvalidMoveException.class, () -> {
-            board.playMove(-1, -1);
+            board.playMove(-1, 0);
         });
         assertThrows(InvalidMoveException.class, () -> {
-            board.playMove(4, 4);
+            board.playMove(3, 0);
+        });
+        assertThrows(InvalidMoveException.class, () -> {
+            board.playMove(0, -1);
+        });
+        assertThrows(InvalidMoveException.class, () -> {
+            board.playMove(0, 3);
         });
     }
 
@@ -143,6 +150,7 @@ public class BoardTest {
 
         assertTrue(board.hasWon(0, 2));
         assertEquals(Board.Player.X, board.getWinner());
+        assertEquals(board.getWinner(), board.getCurrentPlayer());
     }
 
     @Test
