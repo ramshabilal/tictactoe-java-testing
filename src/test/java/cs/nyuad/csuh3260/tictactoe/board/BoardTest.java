@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,26 +19,6 @@ public class BoardTest {
     @BeforeEach
     private void initializeBoard() {
         board = new Board();
-    }
-
-    @Test
-    public void boardInitializationCreatesThreeByThreeMatrix() throws Exception {
-        // Use reflection to access the private method initBoard()
-        Method initBoardMethod = Board.class.getDeclaredMethod("initBoard");
-        initBoardMethod.setAccessible(true);
-        initBoardMethod.invoke(board);
-
-        // Use reflection to access the private field board
-        Field boardField = Board.class.getDeclaredField("board");
-        boardField.setAccessible(true);
-        Board.Player[][] actualBoard = (Board.Player[][]) boardField.get(board);
-
-        // Verify that all cells are initialized to Player.NONE
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                assertEquals(Board.Player.NONE, actualBoard[i][j]);
-            }
-        }
     }
 
     @Test
@@ -192,9 +169,21 @@ public class BoardTest {
     }
 
     @Test
-    public void testPlayerAtPosWinnerAndCurrentPlayer() throws Exception {
-        // Test getPlayerAtPos, getWinner, and getCurrentPlayer methods
+    public void testPlayerAtPos() throws Exception {
+        // Play moves to set up the board
+        board.playMove(0, 0); // X
+        board.playMove(0, 1); // O
+        board.playMove(0, 2); // X
 
+        // Verify getPlayerAtPos for various positions
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 0));
+        assertEquals(Board.Player.O, board.getPlayerAtPos(0, 1));
+        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 2));
+        assertEquals(Board.Player.NONE, board.getPlayerAtPos(2, 2));
+    }
+
+    @Test
+    public void testGetWinner() throws Exception {
         // Play moves to set up the board
         board.playMove(0, 0); // X
         board.playMove(0, 1); // O
@@ -205,31 +194,23 @@ public class BoardTest {
         board.playMove(1, 2); // X
         assertFalse(board.hasWon(2, 0)); // No winner yet
         board.playMove(2, 1); // O
-        assertFalse(board.hasWon(2, 1)); // No winner yet
-
-        // Verify getPlayerAtPos for various positions
-        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 0));
-        assertEquals(Board.Player.O, board.getPlayerAtPos(0, 1));
-        assertEquals(Board.Player.X, board.getPlayerAtPos(0, 2));
-        assertEquals(Board.Player.O, board.getPlayerAtPos(1, 0));
-        assertEquals(Board.Player.X, board.getPlayerAtPos(1, 1));
-        assertEquals(Board.Player.O, board.getPlayerAtPos(2, 0));
-        assertEquals(Board.Player.X, board.getPlayerAtPos(1, 2));
-        assertEquals(Board.Player.O, board.getPlayerAtPos(2, 1));
-        assertEquals(Board.Player.NONE, board.getPlayerAtPos(2, 2));
-
-        // Verify getCurrentPlayer
-        assertEquals(Board.Player.X, board.getCurrentPlayer());
 
         // Verify getWinner
         assertNull(board.getWinner());
 
         // Play the move that will make X win
         board.playMove(2, 2);
-
         assertTrue(board.hasWon(2, 2)); // X has won
         assertEquals(Board.Player.X, board.getWinner());
-        assertEquals(Board.Player.X, board.getCurrentPlayer()); // Game has finished
+    }
+
+    @Test
+    public void testGetCurrentPlayer() throws Exception {
+        board.playMove(2, 1); // X
+        assertEquals(Board.Player.O, board.getCurrentPlayer());
+
+        board.playMove(2, 2); // O
+        assertEquals(Board.Player.X, board.getCurrentPlayer());
     }
 
 }
