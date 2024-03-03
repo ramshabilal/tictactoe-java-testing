@@ -15,8 +15,8 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
-    @SuppressWarnings("unused")
     private ScoreBoard scoreboard; // to keep track of scores
+
 
     public Board() {
         board = new Player[3][3];
@@ -52,13 +52,11 @@ public class Board {
 
             if (hasWon(row, col)) {
                 winner = currentPlayer;
-            }
-            else if (isTie()) {
+            } else if (isTie()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("The game is tie :)");
                 throw new GameFinishedException(stringBuilder.toString());
-            }
-            else if(currentPlayer == Player.X)
+            } else if (currentPlayer == Player.X)
                 currentPlayer = Player.O;
             else
                 currentPlayer = Player.X;
