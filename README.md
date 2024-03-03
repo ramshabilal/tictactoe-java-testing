@@ -72,3 +72,7 @@ In the `testUpdateScores_MultipleGames` method, several scenarios are tested to 
 These tests collectively ensure comprehensive coverage of the ScoreBoard class, covering various scenarios and edge cases to validate its correctness and robustness. 100% statement and branch coverage achieved for the scoreboard class.
 ![alt text](image.png)
 
+For Board class:
+![image](https://github.com/cs-uh-3260/g1--group_8/assets/46382232/4cd606d9-c455-4900-99a2-ca800621b2d7)
+
+
