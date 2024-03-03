@@ -1,7 +1,7 @@
 package cs.nyuad.csuh3260.tictactoe.board;
 
-import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
 import cs.nyuad.csuh3260.tictactoe.board.exceptions.GameFinishedException;
+import cs.nyuad.csuh3260.tictactoe.board.exceptions.InvalidMoveException;
 
 /**
  * Created by snadi on 2018-07-16.
@@ -15,6 +15,7 @@ public class Board {
     private Player currentPlayer;
     private Player winner;
     private Player board[][];
+    @SuppressWarnings("unused")
     private ScoreBoard scoreboard; // to keep track of scores
 
     public Board() {
@@ -151,5 +152,11 @@ public class Board {
 
     public Player getPlayerAtPos(int row, int col) {
         return board[row][col];
+    }
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+    public void setWinner(Player winner) {
+    this.winner = winner;
     }
 }

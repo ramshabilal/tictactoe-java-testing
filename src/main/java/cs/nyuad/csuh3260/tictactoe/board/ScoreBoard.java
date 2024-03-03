@@ -6,6 +6,7 @@ public class ScoreBoard {
     int oWins;
     int ties; 
 
+    @SuppressWarnings("unused")
     public ScoreBoard() {
         int xWins = 0;
         int oWins = 0;
@@ -30,5 +31,19 @@ public class ScoreBoard {
         System.out.println("X wins: " + xWins);
         System.out.println("O wins: " + oWins);
         System.out.println("Ties: " + ties);
+    }
+
+    // Getter for xWins
+    public int getXWins() {
+        return xWins;
+    }
+
+    // Getter for xWins
+    public int getOWins() {
+        return oWins;
+    }
+    // Getter for xWins
+    public int getties() {
+        return ties;
     }
 }
