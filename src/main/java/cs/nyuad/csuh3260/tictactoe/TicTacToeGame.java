@@ -31,8 +31,12 @@ public class TicTacToeGame {
             case O:
                 System.out.println("It's player " + board.getSymbol(board.getCurrentPlayer()) + "'s turn. Please enter the coordinates of your next move as x,y: ");
                 break;
+            default:
+                System.out.println("No Player");
+                break;
 
         }
+        
     }
 
     public void playGame(InputStream inputStream) {
@@ -83,4 +87,6 @@ public class TicTacToeGame {
     public ScoreBoard getScoreboard() {
         return scoreboard;
     }
+
+
 }

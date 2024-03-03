@@ -1,8 +1,7 @@
 package cs.nyuad.csuh3260.tictactoe;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +9,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import cs.nyuad.csuh3260.tictactoe.board.Board;
@@ -20,48 +20,49 @@ import cs.nyuad.csuh3260.tictactoe.board.ScoreBoard;
 public class TicTacToeGameTest {
 
     private TicTacToeGame game;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() 
+    {
         game = new TicTacToeGame();
     }
 
-    @Test
-    public void testPromptNextPlayer() {
-        // Set up output stream to capture printed output
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    @BeforeEach
+    public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-
-        // Player X's turn
-        game.board.setCurrentPlayer(Player.X);
-        game.promptNextPlayer();
-        assertEquals("It's player X's turn. Please enter the coordinates of your next move as x,y: ".trim(), outContent.toString().trim());
-
-        // Reset the output stream
-        outContent.reset();
-
-        // Player O's turn
-        game.board.setCurrentPlayer(Player.O);
-        game.promptNextPlayer();
-        assertEquals("It's player O's turn. Please enter the coordinates of your next move as x,y: ".trim(), outContent.toString().trim());
-
-        // Reset the output stream
-        outContent.reset();
-
-
-        //Player null
-        // Mock the Board class to simulate a finished game
-        Board mockBoard = mock(Board.class);
-        when(mockBoard.getCurrentPlayer()).thenReturn(Player.X); // return a valid Player instance
-        game.board = mockBoard;
-        // Call the method to be tested
-        game.promptNextPlayer();
-        // Check the printed output
-        assertEquals("It's player null's turn. Please enter the coordinates of your next move as x,y: ".trim(), outContent.toString().trim());
-        // Reset the output stream
-        outContent.reset();
-
     }
+
+    @AfterEach
+    public void resetStreams() {
+        System.setOut(originalOut);
+    }
+
+        @Test
+        public void testPromptNextPlayerForX() {
+            TicTacToeGame game = new TicTacToeGame();
+            game.board.setCurrentPlayer(Board.Player.X); // Assuming you have a way to set the current player
+            game.promptNextPlayer();
+            assertTrue(outContent.toString().contains("It's player X's turn. Please enter the coordinates of your next move as x,y:"));
+        }
+
+        @Test
+        public void testPromptNextPlayerForO() {
+            TicTacToeGame game = new TicTacToeGame();
+            game.board.setCurrentPlayer(Board.Player.O);
+            game.promptNextPlayer();
+            assertTrue(outContent.toString().contains("It's player O's turn. Please enter the coordinates of your next move as x,y:"));
+        }
+
+        @Test
+        public void testPromptNextPlayerForNull() {
+            TicTacToeGame game = new TicTacToeGame();
+            game.board.setCurrentPlayer(Board.Player.NONE);
+            game.promptNextPlayer();
+            assertTrue(outContent.toString().contains("No Player"));
+        }
+
 
     
 
@@ -159,6 +160,12 @@ public class TicTacToeGameTest {
         in = new ByteArrayInputStream(input.getBytes());
         game.playGame(in);
         assertEquals(Player.X, game.board.getWinner());
+
+        // Set up input stream for out of bounds input
+         input = "0,0\n0,1\n1,1\n3,2\n0,2\n2,2\nno\n";
+         in = new ByteArrayInputStream(input.getBytes());
+         game.playGame(in);
+         assertEquals(Player.X, game.board.getWinner());
 
         
     }
@@ -267,6 +274,7 @@ public class TicTacToeGameTest {
         assertEquals(2, scoreboard.getOWins());
         assertEquals(0, scoreboard.getties());
     }
+    
     
 
    
