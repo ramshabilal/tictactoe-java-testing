@@ -8,8 +8,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cs.nyuad.csuh3260.tictactoe.board.Board;
@@ -141,33 +141,46 @@ public class TicTacToeGameTest {
         in = new ByteArrayInputStream(input.getBytes());
         game.playGame(in);
         assertEquals(null, game.board.getWinner());
+    
+    }
+
+    @Test
+    public void invalid() {
+    // Test invalid input
+    String input = "invalid\n";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    game.playGame(in);
+    assertEquals(null, game.board.getWinner());
+    }
 
 
-        // Test invalid input
-        input = "invalid\n";
-        in = new ByteArrayInputStream(input.getBytes());
-        game.playGame(in);
-        assertEquals(null, game.board.getWinner());
+    @Test
+    public void unexpected() {
+   // Test unexpected input leading to game termination after a move
+    String input = "0,0\nunexpected\n";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    game.playGame(in);
+    assertEquals(null, game.board.getWinner());
+    }
 
-        // Test unexpected input leading to game termination after a move
-        input = "0,0\nunexpected\n";
-        in = new ByteArrayInputStream(input.getBytes());
-        game.playGame(in);
-        assertEquals(null, game.board.getWinner());
+    @Test
+    public void outofbounds() {
+    // Set up input stream for out of bounds input
+    String input = "3,3\n0,0\n0,1\n1,1\n0,2\n2,2\nno\n";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    game.playGame(in);
+    assertEquals(Player.X, game.board.getWinner());
+    }
+    
 
-        // Set up input stream for out of bounds input
-        input = "3,3\n0,0\n0,1\n1,1\n0,2\n2,2\nno\n";
-        in = new ByteArrayInputStream(input.getBytes());
-        game.playGame(in);
-        assertEquals(Player.X, game.board.getWinner());
+    @Test
+    public void outofboundsinmiddle() {
+    // Set up input stream for out of bounds input in middle
+    String input = "0,0\n0,1\n1,1\n3,2\n0,2\n2,2\nno\n";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    game.playGame(in);
+    assertEquals(Player.X, game.board.getWinner());
 
-        // Set up input stream for out of bounds input
-         input = "0,0\n0,1\n1,1\n3,2\n0,2\n2,2\nno\n";
-         in = new ByteArrayInputStream(input.getBytes());
-         game.playGame(in);
-         assertEquals(Player.X, game.board.getWinner());
-
-        
     }
     
     // Edge case: Player X wins with the last move
